@@ -1,7 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+/* eslint-disable no-sequences */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-unused-expressions */
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const url = 'http://127.0.0.1:3000/api/v1/greetings'
+const url = 'http://localhost:3000/api/v1/greetings';
 
 export const fetchGreeting = createAsyncThunk('greeting', async () => {
   const response = await axios.get(url);
