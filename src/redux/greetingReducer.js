@@ -5,28 +5,21 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const url = 'http://localhost:3000/api/v1/greetings';
+const GET_GREETINGS = 'get_greetings';
 
-export const fetchGreeting = createAsyncThunk('greeting', async () => {
+export const fetchGreeting = createAsyncThunk(GET_GREETINGS, async () => {
   const response = await axios.get(url);
-  const { greeting } = response.data;
-  return greeting;
+  return response.data;
 });
 
-export const greetingSlice = createSlice({
+const greetingSlice = createSlice({
   name: 'greeting',
-  initialState: {},
+  initialState: { text: '' },
   extraReducers: (builder) => {
-    builder.addCase(fetchGreeting.pending, (state) => {
-      state.loading = true;
-    }),
-    builder.addCase(fetchGreeting.fulfilled, (state, action) => {
-      state.loading = false;
-      state.greeting = action.payload;
-    }),
-    builder.addCase(fetchGreeting.rejected, (state, action) => {
-      console.log('error: ', action.payload);
-      state.error = true;
-    });
+    builder.addCase(fetchGreeting.fulfilled, (state, action) => ({
+      ...state,
+      text: action.payload.greetings,
+    }));
   },
 });
 

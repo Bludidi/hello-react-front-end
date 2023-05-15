@@ -4,28 +4,13 @@ import { fetchGreeting } from '../redux/greetingReducer';
 
 export default function Greetings() {
   const dispatch = useDispatch();
-  const { greeting, loading, error } = useSelector((state) => state.greeting);
+  const greeting = useSelector((state) => state.text);
   useEffect(() => {
     dispatch(fetchGreeting());
-  }, []);
-
-  const handler = () => {
-    dispatch(fetchGreeting());
-  };
-
+  }, [dispatch]);
   return (
-    <div className="container mt-3">
-      <div className="d-flex flex-column justify-content-center align-items-center">
-        <h1>Greetings</h1>
-        {loading && (
-          <div className="spinner-border" role="status">
-            <span className="sr-only" />
-          </div>
-        )}
-        {error && <h2>Something went wrong!</h2>}
-        {!loading && <p>{greeting}</p>}
-        {!loading && !error && <button type="button" className="btn btn-primary" onClick={handler}>Click the button to fetch greeting</button>}
-      </div>
+    <div>
+      <h2>{greeting}</h2>
     </div>
   );
 }
