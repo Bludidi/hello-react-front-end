@@ -1,15 +1,13 @@
-import { Route, Routes } from 'react-router-dom';
-import Greetings from './components/Greeting';
-import './App.css';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Greeting from './components/Greeting';
 
-function App() {
-  return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Greetings />} />
-      </Routes>
-    </div>
-  );
-}
+const App = () => (
+  <div>
+    <Routes>
+      <Route path="/greeting" element={<Greeting />} />
+    </Routes>
+  </div>
+);
 
 export default App;

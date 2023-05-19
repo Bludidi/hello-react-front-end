@@ -1,18 +1,16 @@
-/* eslint-disable no-sequences */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-unused-expressions */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const url = 'http://127.0.0.1:3000/api/v1/greetings';
-const GET_GREETINGS = 'get_greetings';
+const GETGREETINGDATA = 'greeting/webapp/GETGREETINGDATA';
+const URL = 'http://localhost:3000/api/v1/greetings';
+
 const initialState = {
-  greetingText: [],
+  greetingData: [],
   isLoading: true,
 };
 
-export const fetchGreeting = createAsyncThunk(GET_GREETINGS, async () => {
-  const response = await axios.get(url);
+export const getApiData = createAsyncThunk(GETGREETINGDATA, async () => {
+  const response = await axios.get(URL);
   return response.data;
 });
 
@@ -21,14 +19,14 @@ const greetingSlice = createSlice({
   initialState,
   reducers: [],
   extraReducers: {
-    [fetchGreeting.fulfilled]: (state, action) => {
-      state.greetingText = action.payload;
+    [getApiData.fulfilled]: (state, action) => {
+      state.greetingData = action.payload;
       state.isLoading = false;
     },
-    [fetchGreeting.pending]: (state) => {
+    [getApiData.pending]: (state) => {
       state.isLoading = true;
     },
-    [fetchGreeting.rejected]: (state) => {
+    [getApiData.rejected]: (state) => {
       state.isLoading = false;
     },
   },

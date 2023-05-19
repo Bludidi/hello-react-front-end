@@ -1,24 +1,23 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGreeting } from '../redux/greetingSlice';
+import { getApiData } from '../redux/greetingSlice';
 
-const Greetings = () => {
+const Greeting = () => {
   const dispatch = useDispatch();
-  const randomGreeting = useSelector((state) => state.greetingText);
+  const newGreetings = useSelector((state) => state.greeting.greetingData);
 
   useEffect(() => {
-    dispatch(fetchGreeting());
+    dispatch(getApiData());
   }, [dispatch]);
   return (
     <>
-      <p>Random Grettings</p>
-      {randomGreeting.map((greeting) => (
+      <p>Example of Greetings</p>
+      {newGreetings.map((greeting) => (
         <div key={greeting.id}>
-          <h2>{greeting.greetingText}</h2>
+          <h2>{greeting.greeting}</h2>
         </div>
       ))}
     </>
   );
 };
-
-export default Greetings;
+export default Greeting;
