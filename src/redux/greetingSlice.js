@@ -6,7 +6,8 @@ const URL = 'http://localhost:3000/api/v1/greetings';
 
 const initialState = {
   greetingData: [],
-  isLoading: true,
+  isLoading: false,
+  error: null,
 };
 
 export const getApiData = createAsyncThunk(GETGREETINGDATA, async () => {
@@ -17,19 +18,20 @@ export const getApiData = createAsyncThunk(GETGREETINGDATA, async () => {
 const greetingSlice = createSlice({
   name: 'greeting',
   initialState,
-  reducers: [],
-  extraReducers: {
-    [getApiData.fulfilled]: (state, action) => {
-      state.greetingData = action.payload;
-      state.isLoading = false;
-    },
-    [getApiData.pending]: (state) => {
+  reducers: [{
+    getApiDataStart(state) {
       state.isLoading = true;
+      state.error = null;
     },
-    [getApiData.rejected]: (state) => {
+    getApiDataSuccess(state, action) {
       state.isLoading = false;
+      state.greetingData = action.payload;
     },
-  },
+    getApiDataFailure(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+  }],
 });
 
 export default greetingSlice.reducer;
